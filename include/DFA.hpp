@@ -30,6 +30,8 @@ public:
 
   void minDFA (void);
 
+  void save (const char* nombreFichero, bool& error);
+
   ostream& dbg_write (void) const;
   ostream& write (void) const;
   ostream& write (ostream& os) const;

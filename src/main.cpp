@@ -16,6 +16,8 @@ int main (void) {
 
   DFA dfa;
 
+  string save_route = "../examples/";
+
   int opt;
   unsigned format = 0;
   bool errorApertura = 1;
@@ -28,11 +30,13 @@ int main (void) {
     cout << "----------------------------------------------------------------------------------------------------\n";
     cout << "1. LEER DFA DESDE FICHERO\n";
     cout << "2. CAMBIAR FORMATO DE MUESTREO\n";
-    cout << "3. MOSTRAR DFA\n";
-    cout << "4. INDICAR ESTADOS DE MUERTE DEL AUTOMATA\n";
-    cout << "5. MINIMIZAR AUTOMATA\n";
-    cout << "6. ANALIZAR CADENA\n";
-    cout << "7. MOSTRAR ALFABETO\n";
+    cout << "3. CAMBIAR RUTA DE EJEMPLOS.\n";
+    cout << "4. MOSTRAR DFA\n";
+    cout << "5. INDICAR ESTADOS DE MUERTE DEL AUTOMATA\n";
+    cout << "6. MINIMIZAR AUTOMATA\n";
+    cout << "7. GUARDAR EN FICHERO\n";
+    cout << "8. ANALIZAR CADENA\n";
+    cout << "9. MOSTRAR ALFABETO\n";
     cout << "0. SALIR DEL PROGRAMA\n";
 
     cout << "\nIndique una de las acciones (numero) >> ";
@@ -47,7 +51,7 @@ int main (void) {
         string nombreFichero;
         cout << "Indica el nombre del fichero a cargar: ";
         cin >> nombreFichero;
-        nombreFichero = "../examples/"+nombreFichero;
+        nombreFichero = save_route+nombreFichero;
         cout << "\x1b[1J\x1b[H"; //Limpio pantalla
         dfa.create_dfa(nombreFichero.data(), errorApertura);
         if (errorApertura) {
@@ -62,6 +66,13 @@ int main (void) {
         break;
       }
       case 3: {
+        cout << "Indique la ruta nueva: ";
+        cin >> save_route;
+        cout << "\x1b[2J\x1b[H"; //Limpio pantalla
+        cout << "Ruta cambiada a: " << save_route << "\n";
+        break;
+      }
+      case 4: {
         cout << "\x1b[2J\x1b[H"; //Limpio pantalla
         if (!errorApertura) {
           if (format == 0) { dfa.write(); } else { dfa.dbg_write(); }
@@ -70,7 +81,7 @@ int main (void) {
         }
       }
         break;
-      case 4: {
+      case 5: {
         if (!errorApertura) {
           dfa.show_dead_states();
         } else {
@@ -79,7 +90,7 @@ int main (void) {
         }
       }
         break;
-      case 5: {
+      case 6: {
         if (!errorApertura) {
           dfa.minDFA();
           //cout << "Funcion actualmente no disponible\n";
@@ -89,17 +100,24 @@ int main (void) {
         }
       break;
       }
-      case 6: {
+      case 7: {
         if (!errorApertura) {
-          //dfa.save();
-          cout << "Funcion actualmente no disponible\n";
+          string nombreFichero;
+          bool error = false;
+          cout << "Indica el nombre del fichero a guardar: ";
+          cin >> nombreFichero;
+          nombreFichero = save_route+nombreFichero;
+          cout << "\x1b[1J\x1b[H"; //Limpio pantalla
+          dfa.save(nombreFichero.data(), error);
+          if (!error) cout << "Se ha guardado con exito.\n";
+          //cout << "Funcion actualmente no disponible\n";
         } else {
           cout << "\x1b[1J\x1b[H"; //Limpio pantalla
           cerr << "El fichero no esta cargado o no se ha cargado correctamente. Por favor, seleccione la opcion 1 (LEER DFA DESDE FICHERO) para cargar el fichero en memoria.\n";
         }
         break;
       }
-      case 7: {
+      case 8: {
         if (!errorApertura) {
           dfa.show_chain_result();
         } else {
@@ -108,7 +126,7 @@ int main (void) {
         }
       }
         break;
-      case 8: {
+      case 9: {
         cout << "\x1b[1J\x1b[H"; //Limpio pantalla
         if (!errorApertura) {
           dfa.show_alphabet();

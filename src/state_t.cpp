@@ -1,6 +1,7 @@
 #include "../include/state_t.hpp"
 
 state_t::state_t (const unsigned id, const bool accept) : id_(id), accept_(accept) {}
+state_t::state_t (const state_t& state) : id_(state.id()), accept_(state.is_accept()), next_(state.getNext()) {}
 state_t::~state_t (void) {}
 
 const unsigned state_t::id (void) const {

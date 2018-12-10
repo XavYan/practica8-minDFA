@@ -14,6 +14,7 @@ private:
 
 public:
   state_t (const unsigned id = -1, const bool accept = false);
+  state_t (const state_t& state);
   ~state_t (void);
 
   const unsigned id (void) const;
@@ -23,7 +24,6 @@ public:
   //Devuelve el puntero par que contiene dicha letra. Usado para transitar entre los estados
   unsigned find_by_letter (const char c);
   void insert_pair (const char symbol, const unsigned id);
-  void change_pair (const char symbol, const pair<char,unsigned>& pair);
 
   ostream& dbg_write (void) const;
 

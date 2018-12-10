@@ -67,39 +67,43 @@ void DFA::create_dfa (const char* nombreFichero, bool& errorApertura) {
 
 void DFA::create_dfa (const set<set<state_t> >& OM) {
   all_states_ = OM.size();
-  set<unsigned> deleting_states; //Almacena los ID's de los estados sobrantes
-  for (set<state_t> it : OM) {
-    if (it.size() != 1) {
-      bool first = true;
-      state_t first_state;
-      for (state_t j : it) { //Leemos los estados redundantes
-        if (!first) {
-          deleting_states.insert(j.id()); //El estado se tiene que borrar
-          for (state_t state : states_) { //Buscamos los estados conectados al que sobra
-            for (pair<char,unsigned> pair : state.getNext()) {
-              if (j.id() == get<1>(pair)) { //Si ese estados coincide
-                std::pair<char,unsigned> paux;
-                get<0>(paux) = get<0>(pair);
-                get<1>(paux) = first_state.id();
-                state.change_pair(get<0>(pair),paux);
-              }
-            }
-          }
-        } else {
-          first_state = j;
+
+  //Almacenamos en states los estados que no se van a borrar
+  set<state_t> states;
+  for (set<state_t> set : OM) {
+    states.insert(*(set.begin()));
+  }
+
+  //Procedemos a modificar las aristas para que apunten a los nodos correctos
+  set<state_t> vegar; //Conjuntos que sobran
+  for (set<state_t> set : OM) {
+    vegar.clear();
+    state_t primary(*(set.begin())); //Elemento primario
+    //Los ID's de los estados que estan en vegar se sobrescribiran con el ID del estado primary
+    if (set.size() != 1) {
+      //Calculamos los estados que se van a sustituir, y los almacenamos en vegar
+      for (state_t st : set) {
+        if (primary.id() != st.id()) {
+          vegar.insert(st);
         }
-        first = false;
+      }
+
+      //Leemos las aristas de los estados de states y buscamos las conexiones erroneas
+      for (state_t st : states) {
+        state_t aux(st.id(), st.is_accept());
+        for (pair<char,unsigned> pair : st.getNext()) {
+          if (vegar.find(get<1>(pair)) != vegar.end()) {
+            aux.insert_pair(get<0>(pair), primary.id());
+          } else {
+            aux.insert_pair(get<0>(pair), get<1>(pair));
+          }
+        }
+        states.erase(aux);
+        states.insert(aux);
       }
     }
   }
-
-  //Recorremos todos los estados para eliminar todas las conexiones hacia los estados eliminados
-
-
-  for (unsigned it : deleting_states) {
-    if (init_ == it) change_init();
-    states_.erase(find_by_id(it));
-  }
+  states_ = states;
 }
 
 void DFA::show_chain_result (void) {
@@ -165,9 +169,21 @@ void DFA::minDFA (void) {
 
     OM = new_partition(COM); //Particiona los conjuntos
   } while (!equal(COM,OM));
-  /* Chivato */ cout << "Tamaño del nuevo automata: " << OM.size() << "\n"; write_set_of_set(COM);
+  cout << "El DFA minimo tiene " << OM.size() << " estados.\n";
 
   create_dfa(OM); //Crea el autómata. Uso del overload
+}
+
+void DFA::save (const char* nombreFichero, bool& error) {
+    error = false;
+    ofstream fich;
+    fich.open(nombreFichero);
+    if (!fich.is_open()) {
+      cerr << "Error. El fichero no se ha podido abrir con exito.";
+      error = true;
+      return;
+    }
+    write(fich);
 }
 
 ostream& DFA::dbg_write (void) const {
@@ -233,7 +249,7 @@ set<set<state_t> > DFA::new_partition (const set<set<state_t> >& COM) {
 set<set<state_t> > DFA::descomp (const set<state_t>& G, const set<set<state_t> >& COM) {
   set<set<state_t> > T;
   T.insert(G);
-  for (char it : alphabet) {
+  for (char it : alphabet) { //Para cada letra del alfabeto...
     set<set<state_t> > P;
     for (set<state_t> j : T) { //Lee todos los conjuntos de T
       set<set<state_t> > T2;
@@ -345,14 +361,6 @@ set<state_t> DFA::join (const set<state_t>& set1, const set<state_t>& set2) {
     result.insert(it);
   }
   return result;
-}
-
-void DFA::change_init (void) {
-  state_t aux = find_by_id(init_);
-  for (pair<char,unsigned> it : aux.getNext()) {
-    init_ = get<1>(it);
-    return;
-  }
 }
 
 void DFA::write_set_of_set (const set<set<state_t> >& set) {
