@@ -22,7 +22,7 @@ int main (void) {
 
   cout << "\x1b[2J\x1b[H"; //Limpia la terminal
   do {
-    cout << "Practica 6 de COMPUTABILIDAD Y ALGORITMIA - SIMULADOR DE AUTOMATAS FINITOS DETERMINISTAS\n";
+    cout << "Practica 8 de COMPUTABILIDAD Y ALGORITMIA - SIMULADOR DE AUTOMATAS FINITOS DETERMINISTAS\n";
     cout << "----------------------------------------------------------------------------------------------------\n";
     cout << "Estado del fichero: " << (errorApertura ? "CERRADO" : "ABIERTO") << "\n";
     cout << "----------------------------------------------------------------------------------------------------\n";
@@ -30,9 +30,10 @@ int main (void) {
     cout << "2. CAMBIAR FORMATO DE MUESTREO\n";
     cout << "3. MOSTRAR DFA\n";
     cout << "4. INDICAR ESTADOS DE MUERTE DEL AUTOMATA\n";
-    cout << "5. ANALIZAR CADENA\n";
-    cout << "6. MOSTRAR ALFABETO\n";
-    cout << "7. SALIR DEL PROGRAMA\n";
+    cout << "5. MINIMIZAR AUTOMATA\n";
+    cout << "6. ANALIZAR CADENA\n";
+    cout << "7. MOSTRAR ALFABETO\n";
+    cout << "0. SALIR DEL PROGRAMA\n";
 
     cout << "\nIndique una de las acciones (numero) >> ";
     cin >> opt;
@@ -80,6 +81,26 @@ int main (void) {
         break;
       case 5: {
         if (!errorApertura) {
+          dfa.minDFA();
+          //cout << "Funcion actualmente no disponible\n";
+        } else {
+          cout << "\x1b[1J\x1b[H"; //Limpio pantalla
+          cerr << "El fichero no esta cargado o no se ha cargado correctamente. Por favor, seleccione la opcion 1 (LEER DFA DESDE FICHERO) para cargar el fichero en memoria.\n";
+        }
+      break;
+      }
+      case 6: {
+        if (!errorApertura) {
+          //dfa.save();
+          cout << "Funcion actualmente no disponible\n";
+        } else {
+          cout << "\x1b[1J\x1b[H"; //Limpio pantalla
+          cerr << "El fichero no esta cargado o no se ha cargado correctamente. Por favor, seleccione la opcion 1 (LEER DFA DESDE FICHERO) para cargar el fichero en memoria.\n";
+        }
+        break;
+      }
+      case 7: {
+        if (!errorApertura) {
           dfa.show_chain_result();
         } else {
           cout << "\x1b[1J\x1b[H"; //Limpio pantalla
@@ -87,7 +108,7 @@ int main (void) {
         }
       }
         break;
-      case 6: {
+      case 8: {
         cout << "\x1b[1J\x1b[H"; //Limpio pantalla
         if (!errorApertura) {
           dfa.show_alphabet();
@@ -96,7 +117,7 @@ int main (void) {
         }
       }
         break;
-      case 7: {
+      case 0: {
         cout << "Ha seleccionado salir del programa.\n";
       }
         break;
@@ -105,7 +126,7 @@ int main (void) {
       }
     }
     cout << "----------------------------------------------------------------------------------------------------\n";
-  } while (opt != 7);
+  } while (opt != 0);
 
   return 0;
 }

@@ -65,6 +65,43 @@ void DFA::create_dfa (const char* nombreFichero, bool& errorApertura) {
   fich.close();
 }
 
+void DFA::create_dfa (const set<set<state_t> >& OM) {
+  all_states_ = OM.size();
+  set<unsigned> deleting_states; //Almacena los ID's de los estados sobrantes
+  for (set<state_t> it : OM) {
+    if (it.size() != 1) {
+      bool first = true;
+      state_t first_state;
+      for (state_t j : it) { //Leemos los estados redundantes
+        if (!first) {
+          deleting_states.insert(j.id()); //El estado se tiene que borrar
+          for (state_t state : states_) { //Buscamos los estados conectados al que sobra
+            for (pair<char,unsigned> pair : state.getNext()) {
+              if (j.id() == get<1>(pair)) { //Si ese estados coincide
+                std::pair<char,unsigned> paux;
+                get<0>(paux) = get<0>(pair);
+                get<1>(paux) = first_state.id();
+                state.change_pair(get<0>(pair),paux);
+              }
+            }
+          }
+        } else {
+          first_state = j;
+        }
+        first = false;
+      }
+    }
+  }
+
+  //Recorremos todos los estados para eliminar todas las conexiones hacia los estados eliminados
+
+
+  for (unsigned it : deleting_states) {
+    if (init_ == it) change_init();
+    states_.erase(find_by_id(it));
+  }
+}
+
 void DFA::show_chain_result (void) {
   string s;
   bool result;
@@ -101,6 +138,38 @@ void DFA::show_alphabet (void) {
   cout << "}\n";
 }
 
+void DFA::minDFA (void) {
+  set<set<state_t> > OM; //Conjunto de los estados que vamos a minimizar
+  set<state_t> ACEPT; //Conjunto de estados de aceptacion
+  set<state_t> NO_ACEPT; //Conjunto de estados de no aceptacion
+
+  for (set<state_t>::iterator it = states_.begin(); it != states_.end(); it++) {
+    if (it->is_accept()) {
+      ACEPT.insert(*it);
+    } else {
+      NO_ACEPT.insert(*it);
+    }
+  }
+  OM.insert(ACEPT);
+  OM.insert(NO_ACEPT);
+
+  /* La particion tiene que ocurrir hasta que no se pueda partir mas */
+  set<set<state_t> > COM;
+  unsigned cont = 0;
+  do {
+    COM = OM; //Antiguo conjunto
+
+    cout << "P" << cont++ << " = ";
+    write_set_of_set(COM);
+    cout << "\n";
+
+    OM = new_partition(COM); //Particiona los conjuntos
+  } while (!equal(COM,OM));
+  /* Chivato */ cout << "Tamaño del nuevo automata: " << OM.size() << "\n"; write_set_of_set(COM);
+
+  create_dfa(OM); //Crea el autómata. Uso del overload
+}
+
 ostream& DFA::dbg_write (void) const {
   cout << "Estado totales: " << all_states_ << "\n";
   cout << "ID del estado inicial: " << init_ << "\n";
@@ -115,7 +184,8 @@ ostream& DFA::write (void) const {
   cout << init_ << "\n";
   for (set<state_t>::iterator it = states_.begin(); it != states_.end(); it++) {
     cout << it->id() << " ";
-    cout << (it->is_accept() ? 1 : 0);
+    cout << (it->is_accept() ? 1 : 0) << " ";
+    cout << (it->getNext().size());
     for (set<pair<char, unsigned> >::iterator k = it->getNext().begin(); k != it->getNext().end(); k++) {
       cout << " " << get<0>(*k) << " " << get<1>(*k);
     }
@@ -124,12 +194,79 @@ ostream& DFA::write (void) const {
   return cout;
 }
 
+ostream& DFA::write (ostream& os) const {
+  os << all_states_ << "\n";
+  os << init_ << "\n";
+  for (set<state_t>::iterator it = states_.begin(); it != states_.end(); it++) {
+    os << it->id() << " ";
+    os << (it->is_accept() ? 1 : 0) << " ";
+    os << (it->getNext().size());
+    for (set<pair<char, unsigned> >::iterator k = it->getNext().begin(); k != it->getNext().end(); k++) {
+      os << " " << get<0>(*k) << " " << get<1>(*k);
+    }
+    os << "\n";
+  }
+  return os;
+}
+
 void DFA::clear (void) {
   states_.clear();
   alphabet.clear();
 }
 
 //METODOS PRIVADOS////////////////////////////////////////
+
+
+//Se encarga de realizar las divisiones para formar los nuevos conjuntos de estados, si procede
+set<set<state_t> > DFA::new_partition (const set<set<state_t> >& COM) {
+  set<set<state_t> > aux;
+
+  //Para cada conjunto de estados de COM, vamos descomponiendolos segun se vaya viendo necesario
+  for (set<state_t> it : COM) {
+    aux = join(aux, descomp(it, COM));
+  }
+  //aux se volvera el resultado final, que se retorna
+  return aux;
+}
+
+//Descompone un conjunto de estados si no cumple las reglas de minimizacion
+set<set<state_t> > DFA::descomp (const set<state_t>& G, const set<set<state_t> >& COM) {
+  set<set<state_t> > T;
+  T.insert(G);
+  for (char it : alphabet) {
+    set<set<state_t> > P;
+    for (set<state_t> j : T) { //Lee todos los conjuntos de T
+      set<set<state_t> > T2;
+      T2 = part(j, it, COM); //T2 sera la particion de la letra it, y el conjunto j
+      P = join(P,T2); //P se ira actualizando con las nuevas particiones de T2
+    }
+    T = P; //P representara la salida T, que se ira actualizando tras cada iteracion
+  }
+  return T; //Se devuelven todas los valores de T2 hallados
+}
+
+set<set<state_t> > DFA::part (const set<state_t>& G, const char c, const set<set<state_t> >& COM) {
+  set<set<state_t> > T;
+  set<state_t> part;
+  for (std::set<state_t> it : COM) { //Leemos todos los conjuntos del conjunto COM
+    part.clear();
+    for (state_t i : G) { //Para cada elemento del conjunto que vamos a particionar...
+      for (std::pair<char,unsigned> j : i.getNext()) { //Leemos las aristas que lo conectan con otros nodos
+        if (get<0>(j) == c) { //Si coinciden con la letra buscada...
+          state_t aux = find_by_id(get<1>(j)); //Encontramos el estado
+          assert(aux.id() != -1);
+          if (it.find(aux) != it.end()) { //Si ese estado se encuentra
+            set<state_t> aux;
+            aux.insert(i);
+            part = join(part, aux); //Añadido un estado nuevo
+          }
+        }
+      }
+    }
+    if (part.size() != 0) T.insert(part);
+  }
+  return T;
+}
 
 bool DFA::chain_test (const string& chain) const {
   cout << "Cadena de entrada: " << chain << "\n";
@@ -162,9 +299,76 @@ set<state_t> DFA::dead_states (void) {
   return deadStates;
 }
 
-const state_t DFA::find_by_id (const unsigned id) const {
-  for (set<state_t>::iterator it = states_.begin(); it != states_.end(); it++) {
-    if (it->id() == id) { return *it; }
+const state_t DFA::find_by_id (const unsigned& id) const {
+
+  vector<state_t> aux;
+  for (std::set<state_t>::iterator it = states_.begin(); it != states_.end(); it++) {
+    if (it->id() == id) return *it;
   }
-  return *(new state_t (-1));
+  state_t none(-1);
+  return none;
+}
+
+const bool DFA::equal (const set<set<state_t> >& set1, const set<set<state_t> >& set2) {
+  if (set1.size() != set2.size()) return false;
+  for (set<state_t> it : set1) {
+    if (set2.find(it) == set2.end()) return false;
+  }
+  return true;
+}
+
+const bool DFA::equal (const set<state_t>& set1, const set<state_t>& set2) {
+  if (set1.size() != set2.size()) return false;
+  for (state_t it : set1) {
+    if (set2.find(it) == set2.end()) return false;
+  }
+  return true;
+}
+
+set<set<state_t> > DFA::join (const set<set<state_t> >& set1, const set<set<state_t> >& set2) {
+  set<set<state_t> > result;
+  for (set<state_t> it : set1) {
+    result.insert(it);
+  }
+  for (set<state_t> it : set2) {
+    result.insert(it);
+  }
+  return result;
+}
+
+set<state_t> DFA::join (const set<state_t>& set1, const set<state_t>& set2) {
+  set<state_t> result;
+  for (state_t it : set1) {
+    result.insert(it);
+  }
+  for (state_t it : set2) {
+    result.insert(it);
+  }
+  return result;
+}
+
+void DFA::change_init (void) {
+  state_t aux = find_by_id(init_);
+  for (pair<char,unsigned> it : aux.getNext()) {
+    init_ = get<1>(it);
+    return;
+  }
+}
+
+void DFA::write_set_of_set (const set<set<state_t> >& set) {
+  assert(set.size() != 0);
+  cout << "{";
+  unsigned cont1 = 0;
+  for (std::set<std::set<state_t> >::iterator i = set.begin(); i != set.end(); i++) {
+    cout << "{";
+    unsigned cont2 = 0;
+    for (std::set<state_t>::iterator j = i->begin(); j != i->end(); j++) {
+      cout << j->id() << (cont2 + 1 != i->size() ? "," : "");
+      cont2++;
+    }
+    cout << "}";
+    cout << (cont1 + 1 != set.size() ? "," : "");
+    cont1++;
+  }
+  cout << "}";
 }
