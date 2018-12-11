@@ -1,3 +1,11 @@
+
+/**
+* @file DFA.hpp
+* @Author Himar Manuel Barquin Carrasco
+* @date 11/12/2018
+* @brief Clase DFA
+*/
+
 #pragma once
 
 #include <iostream>
@@ -16,25 +24,106 @@ private:
   unsigned init_; //id del estado inicial
   set<char> alphabet; //alfabeto sobre el que el automata trabaja
 public:
+
+  /**
+  * @brief Constructor del DFA por defecto. Crea un DFA vacío, sin estados, y el ID del estado inicial se pone a -1
+  */
+
   DFA (void);
+
+  /**
+  * @brief Constructor de un DFA al que se le pasa un conjunto de estados ya definidos.
+  * @param states Conjunto de estados del automata
+  */
+
   DFA (const set<state_t>& states);
+
+  /**
+  * @brief Destructor del DFA.
+  */
+
   ~DFA (void);
+
+  /**
+  * @brief Devuelve el ID del estado inicial
+  * @return Valor ID del estado inicial
+  */
 
   const unsigned init (void);
 
+  /**
+  * @brief Crea el DFA
+  * @param nombreFichero Nombre del fichero de lectura
+  * @param errorApertura Valor que devuelve 1 si ocurre algun error al abrir el archivo, 0 en caso contrario
+  */
+
   void create_dfa (const char* nombreFichero, bool& errorApertura);
+
+  /**
+  * @brief Crea el DFA. Version adaptada para crear el DFA tras la minimizacion del automata
+  * @param OM Conjunto que almacena los conjuntos comunes entre si
+  */
+
   void create_dfa (const set<set<state_t> >& OM);
+
+  /**
+  * @brief Muestra el resultado de la cadena analizada
+  */
+
   void show_chain_result (void);
+
+  /**
+  * @brief Muestra los estados de muerte del automata
+  */
+
   void show_dead_states (void);
+
+  /**
+  * @brief Muestra el alfabeto que se ha utilizado para la deficion del automata
+  */
+
   void show_alphabet (void);
+
+  /**
+  * @brief Minimiza el DFA.
+  */
 
   void minDFA (void);
 
+  /**
+  * @brief Guarda la informacion del automata en un fichero.
+  * @param nombreFichero Nombre del fichero donde se va a guardar el automata
+  * @param error Indica si ha habido error en la escritura del automata. 1 si ha habido fallo, 0 en caso contrario
+  */
+
   void save (const char* nombreFichero, bool& error);
 
+  /**
+  * @brief Imprime por consola el automata, en un formato mas legible por el ser humano
+  * @return Salida donde se ha escrito
+  */
+
   ostream& dbg_write (void) const;
+
+  /**
+  * @brief Imprime por consola en formato fichero
+  * @return Salida donde se ha escrito
+  */
+
   ostream& write (void) const;
+
+  /**
+  * @brief Imprime en formato fichero por la salida indicada como parametro
+  * @param os Salida donde se va a escribir
+  * @return Salida donde se ha escrito
+  */
+
   ostream& write (ostream& os) const;
+
+  /**
+  * @brief "Formatea el automata"
+  */
+
   void clear (void);
 
 private:

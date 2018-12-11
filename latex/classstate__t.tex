@@ -1,0 +1,218 @@
+\section{state\+\_\+t Class Reference}
+\label{classstate__t}\index{state\+\_\+t@{state\+\_\+t}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ state\+\_\+t} (const unsigned \textbf{ id}=-\/1, const bool accept=false)
+\begin{DoxyCompactList}\small\item\em Constructor que crea el estado. \end{DoxyCompactList}\item 
+\textbf{ state\+\_\+t} (const \textbf{ state\+\_\+t} \&state)
+\begin{DoxyCompactList}\small\item\em Constructor copia. \end{DoxyCompactList}\item 
+\mbox{\label{classstate__t_af27723c21f5cbdbdc237e4bd7aaff2ed}} 
+\textbf{ $\sim$state\+\_\+t} (void)
+\begin{DoxyCompactList}\small\item\em Destructor de la clase estado (\doxyref{state\+\_\+t}{p.}{classstate__t}) \end{DoxyCompactList}\item 
+const unsigned \textbf{ id} (void) const
+\begin{DoxyCompactList}\small\item\em Devuelve el ID del estado. \end{DoxyCompactList}\item 
+set$<$ pair$<$ char, unsigned $>$ $>$ \textbf{ get\+Next} (void) const
+\begin{DoxyCompactList}\small\item\em Devuelve el conjunto de aristas del estado. \end{DoxyCompactList}\item 
+const bool \textbf{ is\+\_\+accept} (void) const
+\begin{DoxyCompactList}\small\item\em Devuelve un booleano inidicando si el estado es de aceptacion o no. \end{DoxyCompactList}\item 
+unsigned \textbf{ find\+\_\+by\+\_\+letter} (const char c)
+\begin{DoxyCompactList}\small\item\em Devuelve el puntero que contiene dicha letra. Usado para transitar entre los estados. \end{DoxyCompactList}\item 
+void \textbf{ insert\+\_\+pair} (const char symbol, const unsigned \textbf{ id})
+\begin{DoxyCompactList}\small\item\em Inserta una nueva arista. \end{DoxyCompactList}\item 
+ostream \& \textbf{ dbg\+\_\+write} (void) const
+\begin{DoxyCompactList}\small\item\em Imprime por pantalla el estado y sus conexiones en un formato legible. \end{DoxyCompactList}\item 
+const bool \textbf{ operator$<$} (const \textbf{ state\+\_\+t} state) const
+\begin{DoxyCompactList}\small\item\em Sobrecarga del operador \textquotesingle{}$<$\textquotesingle{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 17 of file state\+\_\+t.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{classstate__t_a424022379fa10074d6871d6123c8f320}} 
+\index{state\+\_\+t@{state\+\_\+t}!state\+\_\+t@{state\+\_\+t}}
+\index{state\+\_\+t@{state\+\_\+t}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{state\+\_\+t()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily state\+\_\+t\+::state\+\_\+t (\begin{DoxyParamCaption}\item[{const unsigned}]{id = {\ttfamily -\/1},  }\item[{const bool}]{accept = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Constructor que crea el estado. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Identificador del estado, por defecto -\/1 \\
+\hline
+{\em accept} & Indica si el estado es de aceptacion o no. Por defecto false \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 3 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_a0927d11d7e1113c51d090e7261c41ed3}} 
+\index{state\+\_\+t@{state\+\_\+t}!state\+\_\+t@{state\+\_\+t}}
+\index{state\+\_\+t@{state\+\_\+t}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{state\+\_\+t()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily state\+\_\+t\+::state\+\_\+t (\begin{DoxyParamCaption}\item[{const \textbf{ state\+\_\+t} \&}]{state }\end{DoxyParamCaption})}
+
+
+
+Constructor copia. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & estado donde se copian los atributos \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 4 of file state\+\_\+t.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{classstate__t_a4cbecc58710974534b8f1dc0592b9ae1}} 
+\index{state\+\_\+t@{state\+\_\+t}!dbg\+\_\+write@{dbg\+\_\+write}}
+\index{dbg\+\_\+write@{dbg\+\_\+write}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{dbg\+\_\+write()}
+{\footnotesize\ttfamily ostream \& state\+\_\+t\+::dbg\+\_\+write (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Imprime por pantalla el estado y sus conexiones en un formato legible. 
+
+\begin{DoxyReturn}{Returns}
+Salida donde se escribio 
+\end{DoxyReturn}
+
+
+Definition at line 34 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_a716e1078c9486ebb9686dfc97d5749c7}} 
+\index{state\+\_\+t@{state\+\_\+t}!find\+\_\+by\+\_\+letter@{find\+\_\+by\+\_\+letter}}
+\index{find\+\_\+by\+\_\+letter@{find\+\_\+by\+\_\+letter}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{find\+\_\+by\+\_\+letter()}
+{\footnotesize\ttfamily unsigned state\+\_\+t\+::find\+\_\+by\+\_\+letter (\begin{DoxyParamCaption}\item[{const char}]{c }\end{DoxyParamCaption})}
+
+
+
+Devuelve el puntero que contiene dicha letra. Usado para transitar entre los estados. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & Caracter que se usa para encontrar la arista por la que transita \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+ID del estado al que se apunta a traves de la arista 
+\end{DoxyReturn}
+
+
+Definition at line 19 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_a2ab5aaf45f890ade849fc87a0da80f6a}} 
+\index{state\+\_\+t@{state\+\_\+t}!get\+Next@{get\+Next}}
+\index{get\+Next@{get\+Next}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{get\+Next()}
+{\footnotesize\ttfamily set$<$ pair$<$ char, unsigned $>$ $>$ state\+\_\+t\+::get\+Next (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Devuelve el conjunto de aristas del estado. 
+
+\begin{DoxyReturn}{Returns}
+Conjunto de aristas del estado 
+\end{DoxyReturn}
+
+
+Definition at line 11 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_ade808c541a78e337c021020842e3c21d}} 
+\index{state\+\_\+t@{state\+\_\+t}!id@{id}}
+\index{id@{id}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{id()}
+{\footnotesize\ttfamily const unsigned state\+\_\+t\+::id (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Devuelve el ID del estado. 
+
+\begin{DoxyReturn}{Returns}
+ID del estado 
+\end{DoxyReturn}
+
+
+Definition at line 7 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_a8a18ea542fd131b22dfee5897caab79e}} 
+\index{state\+\_\+t@{state\+\_\+t}!insert\+\_\+pair@{insert\+\_\+pair}}
+\index{insert\+\_\+pair@{insert\+\_\+pair}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{insert\+\_\+pair()}
+{\footnotesize\ttfamily void state\+\_\+t\+::insert\+\_\+pair (\begin{DoxyParamCaption}\item[{const char}]{symbol,  }\item[{const unsigned}]{id }\end{DoxyParamCaption})}
+
+
+
+Inserta una nueva arista. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em symbol} & Simbolo de transicion \\
+\hline
+{\em id} & ID del estado al que transita \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 27 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_a83874dc98292ca29be83680dee6f9456}} 
+\index{state\+\_\+t@{state\+\_\+t}!is\+\_\+accept@{is\+\_\+accept}}
+\index{is\+\_\+accept@{is\+\_\+accept}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{is\+\_\+accept()}
+{\footnotesize\ttfamily const bool state\+\_\+t\+::is\+\_\+accept (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Devuelve un booleano inidicando si el estado es de aceptacion o no. 
+
+\begin{DoxyReturn}{Returns}
+Booleano indicando si el estado es de aceptacion 
+\end{DoxyReturn}
+
+
+Definition at line 15 of file state\+\_\+t.\+cpp.
+
+\mbox{\label{classstate__t_aef60c051e68f523c809033f2e9bdd202}} 
+\index{state\+\_\+t@{state\+\_\+t}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!state\+\_\+t@{state\+\_\+t}}
+\subsubsection{operator$<$()}
+{\footnotesize\ttfamily const bool state\+\_\+t\+::operator$<$ (\begin{DoxyParamCaption}\item[{const \textbf{ state\+\_\+t}}]{state }\end{DoxyParamCaption}) const}
+
+
+
+Sobrecarga del operador \textquotesingle{}$<$\textquotesingle{}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & Estado que se compara con el actual \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Booleano que indica el resultado de la comparacion 
+\end{DoxyReturn}
+
+
+Definition at line 46 of file state\+\_\+t.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\textbf{ state\+\_\+t.\+hpp}\item 
+src/state\+\_\+t.\+cpp\end{DoxyCompactItemize}

@@ -3,9 +3,7 @@
 using namespace std;
 DFA::DFA (void) : states_(), all_states_(0), init_(-1) {}
 
-DFA::DFA (const set<state_t>& states) : states_ (states), all_states_(0), init_(-1){
-  all_states_ = states_.size();
-}
+DFA::DFA (const set<state_t>& states) : states_ (states), all_states_(states.size()), init_(-1) {}
 
 DFA::~DFA (void) { clear(); }
 

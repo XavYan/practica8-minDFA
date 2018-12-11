@@ -1,0 +1,214 @@
+\section{D\+FA Class Reference}
+\label{class_d_f_a}\index{D\+FA@{D\+FA}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\label{class_d_f_a_a22147c876a89b6342512b13b20dd5fcd}} 
+\textbf{ D\+FA} (void)
+\begin{DoxyCompactList}\small\item\em Constructor del \doxyref{D\+FA}{p.}{class_d_f_a} por defecto. Crea un \doxyref{D\+FA}{p.}{class_d_f_a} vacío, sin estados, y el ID del estado inicial se pone a -\/1. \end{DoxyCompactList}\item 
+\textbf{ D\+FA} (const set$<$ \textbf{ state\+\_\+t} $>$ \&states)
+\begin{DoxyCompactList}\small\item\em Constructor de un \doxyref{D\+FA}{p.}{class_d_f_a} al que se le pasa un conjunto de estados ya definidos. \end{DoxyCompactList}\item 
+\mbox{\label{class_d_f_a_aa6398a02d0f2d3a57cee0c7d8b3ec9e1}} 
+\textbf{ $\sim$\+D\+FA} (void)
+\begin{DoxyCompactList}\small\item\em Destructor del \doxyref{D\+FA}{p.}{class_d_f_a}. \end{DoxyCompactList}\item 
+const unsigned \textbf{ init} (void)
+\begin{DoxyCompactList}\small\item\em Devuelve el ID del estado inicial. \end{DoxyCompactList}\item 
+void \textbf{ create\+\_\+dfa} (const char $\ast$nombre\+Fichero, bool \&error\+Apertura)
+\begin{DoxyCompactList}\small\item\em Crea el \doxyref{D\+FA}{p.}{class_d_f_a}. \end{DoxyCompactList}\item 
+void \textbf{ create\+\_\+dfa} (const set$<$ set$<$ \textbf{ state\+\_\+t} $>$ $>$ \&OM)
+\begin{DoxyCompactList}\small\item\em Crea el \doxyref{D\+FA}{p.}{class_d_f_a}. Version adaptada para crear el \doxyref{D\+FA}{p.}{class_d_f_a} tras la minimizacion del automata. \end{DoxyCompactList}\item 
+\mbox{\label{class_d_f_a_a7b3b402a2383507bc7836a8fa8af9371}} 
+void \textbf{ show\+\_\+chain\+\_\+result} (void)
+\begin{DoxyCompactList}\small\item\em Muestra el resultado de la cadena analizada. \end{DoxyCompactList}\item 
+\mbox{\label{class_d_f_a_a311a5c043b5d11ea6ed4f34b8a901310}} 
+void \textbf{ show\+\_\+dead\+\_\+states} (void)
+\begin{DoxyCompactList}\small\item\em Muestra los estados de muerte del automata. \end{DoxyCompactList}\item 
+\mbox{\label{class_d_f_a_a3f03ba04e1130dafc0a62a101ecec61a}} 
+void \textbf{ show\+\_\+alphabet} (void)
+\begin{DoxyCompactList}\small\item\em Muestra el alfabeto que se ha utilizado para la deficion del automata. \end{DoxyCompactList}\item 
+\mbox{\label{class_d_f_a_ab17185eaa4d96f9822bab514372abdd9}} 
+void \textbf{ min\+D\+FA} (void)
+\begin{DoxyCompactList}\small\item\em Minimiza el \doxyref{D\+FA}{p.}{class_d_f_a}. \end{DoxyCompactList}\item 
+void \textbf{ save} (const char $\ast$nombre\+Fichero, bool \&error)
+\begin{DoxyCompactList}\small\item\em Guarda la informacion del automata en un fichero. \end{DoxyCompactList}\item 
+ostream \& \textbf{ dbg\+\_\+write} (void) const
+\begin{DoxyCompactList}\small\item\em Imprime por consola el automata, en un formato mas legible por el ser humano. \end{DoxyCompactList}\item 
+ostream \& \textbf{ write} (void) const
+\begin{DoxyCompactList}\small\item\em Imprime por consola en formato fichero. \end{DoxyCompactList}\item 
+ostream \& \textbf{ write} (ostream \&os) const
+\begin{DoxyCompactList}\small\item\em Imprime en formato fichero por la salida indicada como parametro. \end{DoxyCompactList}\item 
+\mbox{\label{class_d_f_a_a2abcdde01c9833f97b99c9d1c7e739aa}} 
+void \textbf{ clear} (void)
+\begin{DoxyCompactList}\small\item\em \char`\"{}\+Formatea el automata\char`\"{} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 20 of file D\+F\+A.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\label{class_d_f_a_a58748588a492bf8c3f5dd9bb1310aa41}} 
+\index{D\+FA@{D\+FA}!D\+FA@{D\+FA}}
+\index{D\+FA@{D\+FA}!D\+FA@{D\+FA}}
+\subsubsection{D\+F\+A()}
+{\footnotesize\ttfamily D\+F\+A\+::\+D\+FA (\begin{DoxyParamCaption}\item[{const set$<$ \textbf{ state\+\_\+t} $>$ \&}]{states }\end{DoxyParamCaption})}
+
+
+
+Constructor de un \doxyref{D\+FA}{p.}{class_d_f_a} al que se le pasa un conjunto de estados ya definidos. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em states} & Conjunto de estados del automata \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 6 of file D\+F\+A.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\label{class_d_f_a_a31d1ae734a752f28753d5fa3031c4f0c}} 
+\index{D\+FA@{D\+FA}!create\+\_\+dfa@{create\+\_\+dfa}}
+\index{create\+\_\+dfa@{create\+\_\+dfa}!D\+FA@{D\+FA}}
+\subsubsection{create\+\_\+dfa()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void D\+F\+A\+::create\+\_\+dfa (\begin{DoxyParamCaption}\item[{const char $\ast$}]{nombre\+Fichero,  }\item[{bool \&}]{error\+Apertura }\end{DoxyParamCaption})}
+
+
+
+Crea el \doxyref{D\+FA}{p.}{class_d_f_a}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nombre\+Fichero} & Nombre del fichero de lectura \\
+\hline
+{\em error\+Apertura} & Valor que devuelve 1 si ocurre algun error al abrir el archivo, 0 en caso contrario \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 14 of file D\+F\+A.\+cpp.
+
+\mbox{\label{class_d_f_a_a06e28de0df3c54afe35ecebe60e88484}} 
+\index{D\+FA@{D\+FA}!create\+\_\+dfa@{create\+\_\+dfa}}
+\index{create\+\_\+dfa@{create\+\_\+dfa}!D\+FA@{D\+FA}}
+\subsubsection{create\+\_\+dfa()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void D\+F\+A\+::create\+\_\+dfa (\begin{DoxyParamCaption}\item[{const set$<$ set$<$ \textbf{ state\+\_\+t} $>$ $>$ \&}]{OM }\end{DoxyParamCaption})}
+
+
+
+Crea el \doxyref{D\+FA}{p.}{class_d_f_a}. Version adaptada para crear el \doxyref{D\+FA}{p.}{class_d_f_a} tras la minimizacion del automata. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em OM} & Conjunto que almacena los conjuntos comunes entre si \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 66 of file D\+F\+A.\+cpp.
+
+\mbox{\label{class_d_f_a_ac7f9b36f9c298f1dfd53c4bdf395c1d5}} 
+\index{D\+FA@{D\+FA}!dbg\+\_\+write@{dbg\+\_\+write}}
+\index{dbg\+\_\+write@{dbg\+\_\+write}!D\+FA@{D\+FA}}
+\subsubsection{dbg\+\_\+write()}
+{\footnotesize\ttfamily ostream \& D\+F\+A\+::dbg\+\_\+write (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Imprime por consola el automata, en un formato mas legible por el ser humano. 
+
+\begin{DoxyReturn}{Returns}
+Salida donde se ha escrito 
+\end{DoxyReturn}
+
+
+Definition at line 187 of file D\+F\+A.\+cpp.
+
+\mbox{\label{class_d_f_a_a97e39f09fca7cbe4d2674797b0fdaabc}} 
+\index{D\+FA@{D\+FA}!init@{init}}
+\index{init@{init}!D\+FA@{D\+FA}}
+\subsubsection{init()}
+{\footnotesize\ttfamily const unsigned D\+F\+A\+::init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Devuelve el ID del estado inicial. 
+
+\begin{DoxyReturn}{Returns}
+Valor ID del estado inicial 
+\end{DoxyReturn}
+
+
+Definition at line 10 of file D\+F\+A.\+cpp.
+
+\mbox{\label{class_d_f_a_ac614efadfde86fde0b0ab45f2c9c2e5e}} 
+\index{D\+FA@{D\+FA}!save@{save}}
+\index{save@{save}!D\+FA@{D\+FA}}
+\subsubsection{save()}
+{\footnotesize\ttfamily void D\+F\+A\+::save (\begin{DoxyParamCaption}\item[{const char $\ast$}]{nombre\+Fichero,  }\item[{bool \&}]{error }\end{DoxyParamCaption})}
+
+
+
+Guarda la informacion del automata en un fichero. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nombre\+Fichero} & Nombre del fichero donde se va a guardar el automata \\
+\hline
+{\em error} & Indica si ha habido error en la escritura del automata. 1 si ha habido fallo, 0 en caso contrario \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 175 of file D\+F\+A.\+cpp.
+
+\mbox{\label{class_d_f_a_a453bbd313adb90e3615694aad833b014}} 
+\index{D\+FA@{D\+FA}!write@{write}}
+\index{write@{write}!D\+FA@{D\+FA}}
+\subsubsection{write()\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily ostream \& D\+F\+A\+::write (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Imprime por consola en formato fichero. 
+
+\begin{DoxyReturn}{Returns}
+Salida donde se ha escrito 
+\end{DoxyReturn}
+
+
+Definition at line 196 of file D\+F\+A.\+cpp.
+
+\mbox{\label{class_d_f_a_aec27d0774ad67c7c29a5679e938fab5d}} 
+\index{D\+FA@{D\+FA}!write@{write}}
+\index{write@{write}!D\+FA@{D\+FA}}
+\subsubsection{write()\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily ostream \& D\+F\+A\+::write (\begin{DoxyParamCaption}\item[{ostream \&}]{os }\end{DoxyParamCaption}) const}
+
+
+
+Imprime en formato fichero por la salida indicada como parametro. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Salida donde se va a escribir \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Salida donde se ha escrito 
+\end{DoxyReturn}
+
+
+Definition at line 211 of file D\+F\+A.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\textbf{ D\+F\+A.\+hpp}\item 
+src/D\+F\+A.\+cpp\end{DoxyCompactItemize}
