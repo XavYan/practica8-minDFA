@@ -28,16 +28,16 @@ int main (void) {
     cout << "----------------------------------------------------------------------------------------------------\n";
     cout << "Estado del fichero: " << (errorApertura ? "CERRADO" : "ABIERTO") << "\n";
     cout << "----------------------------------------------------------------------------------------------------\n";
-    cout << "1. LEER DFA DESDE FICHERO\n";
-    cout << "2. CAMBIAR FORMATO DE MUESTREO\n";
+    cout << "1. LEER DFA DESDE FICHERO.\n";
+    cout << "2. CAMBIAR FORMATO DE MUESTREO.\n";
     cout << "3. CAMBIAR RUTA DE EJEMPLOS.\n";
-    cout << "4. MOSTRAR DFA\n";
-    cout << "5. INDICAR ESTADOS DE MUERTE DEL AUTOMATA\n";
-    cout << "6. MINIMIZAR AUTOMATA\n";
-    cout << "7. GUARDAR EN FICHERO\n";
-    cout << "8. ANALIZAR CADENA\n";
-    cout << "9. MOSTRAR ALFABETO\n";
-    cout << "0. SALIR DEL PROGRAMA\n";
+    cout << "4. MOSTRAR DFA.\n";
+    cout << "5. INDICAR ESTADOS DE MUERTE DEL AUTOMATA.\n";
+    cout << "6. MINIMIZAR AUTOMATA.\n";
+    cout << "7. GUARDAR EN FICHERO.\n";
+    cout << "8. ANALIZAR CADENA.\n";
+    cout << "9. MOSTRAR ALFABETO.\n";
+    cout << "0. SALIR DEL PROGRAMA.\n";
 
     cout << "\nIndique una de las acciones (numero) >> ";
     cin >> opt;
@@ -92,6 +92,7 @@ int main (void) {
         break;
       case 6: {
         if (!errorApertura) {
+          cout << "\x1b[1J\x1b[H"; //Limpio pantalla
           dfa.minDFA();
           //cout << "Funcion actualmente no disponible\n";
         } else {
